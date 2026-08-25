@@ -192,7 +192,7 @@ void opengl_hook::init()
 	{
 		throw std::runtime_error("unable to get wglswapbuffer's function address!");
 	}
-	wgl_swap_buffers_hook.InitHook(pfunc_wgl_swap_buffers, detour_wgl_swap_buffers);
+	wgl_swap_buffers_hook.InitHook(pfunc_wgl_swap_buffers, reinterpret_cast<void*>(detour_wgl_swap_buffers));
 	wgl_swap_buffers_hook.SetHook();
 
 	return;

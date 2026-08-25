@@ -8,6 +8,7 @@
 #include "pics/NeteaseMusicLogo.h"
 #include "pics/MCLogo.h"
 #include <psapi.h>
+#include <thread>
 
 #include "pics/KuGouMusicLogo.h"
 

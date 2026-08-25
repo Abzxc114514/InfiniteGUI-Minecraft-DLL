@@ -77,7 +77,7 @@ namespace fs = std::filesystem;
 
 std::string ReadLastLine(std::wstring & filePath)
 {
-    std::ifstream file(filePath, std::ios::ate | std::ios::binary); // 从末尾打开
+    std::ifstream file(fs::path(filePath), std::ios::ate | std::ios::binary); // 从末尾打开
     if (!file.is_open())
         return ""; // 打开失败
 
