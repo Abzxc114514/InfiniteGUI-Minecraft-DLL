@@ -12,6 +12,20 @@ class KeybindModule
 {
 public:
 	virtual void OnKeyEvent(bool state, bool isRepeat, WPARAM key) = 0;
+
+    // 供 .bind 聊天命令读取 / 修改绑定键
+    int GetBindKey(const std::string& bindName) const
+    {
+        auto it = keybinds.find(bindName);
+        return it != keybinds.end() ? it->second : 0;
+    }
+    void SetBindKey(const std::string& bindName, int vk)
+    {
+        auto it = keybinds.find(bindName);
+        if (it != keybinds.end())
+            it->second = vk;
+    }
+
     void DrawKeybindSettings(const float& bigPadding,const float& centerX,const float& itemWidth)
     {
         ImGui::PushFont(NULL, ImGui::GetFontSize() * 0.8f);

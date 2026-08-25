@@ -12,18 +12,32 @@ class KeybindModule
 {
 public:
 	virtual void OnKeyEvent(bool state, bool isRepeat, WPARAM key) = 0;
+
+    // ä¾› .bind èŠå¤©å‘½ä»¤è¯»å– / ä¿®æ”¹ç»‘å®šé”®
+    int GetBindKey(const std::string& bindName) const
+    {
+        auto it = keybinds.find(bindName);
+        return it != keybinds.end() ? it->second : 0;
+    }
+    void SetBindKey(const std::string& bindName, int vk)
+    {
+        auto it = keybinds.find(bindName);
+        if (it != keybinds.end())
+            it->second = vk;
+    }
+
     void DrawKeybindSettings(const float& bigPadding,const float& centerX,const float& itemWidth)
     {
         ImGui::PushFont(NULL, ImGui::GetFontSize() * 0.8f);
         ImGui::BeginDisabled();
-        ImGuiStd::TextShadow(u8"°´¼ü°ó¶¨ÉèÖÃ");
+        ImGuiStd::TextShadow(u8"æŒ‰é”®ç»‘å®šè®¾ç½®");
         ImGui::EndDisabled();
         ImGui::PopFont();
 
         ImGui::SetCursorPosX(bigPadding);
         ImGui::SetNextItemWidth(itemWidth);
-        ImGui::Checkbox(u8"×Ô¶¨ÒåÓÎÏ·°´¼ü°ó¶¨", &customGameKeybinds);
-        // µ±Ç°ÆğÊ¼ Y
+        ImGui::Checkbox(u8"è‡ªå®šä¹‰æ¸¸æˆæŒ‰é”®ç»‘å®š", &customGameKeybinds);
+        // å½“å‰èµ·å§‹ Y
         float startY = ImGui::GetCursorPosY();
         float itemHeight = ImGui::GetFrameHeightWithSpacing();
 

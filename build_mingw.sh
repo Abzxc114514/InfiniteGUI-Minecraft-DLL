@@ -30,8 +30,8 @@ SRC="$STAGE"
 # 源文件列表（与 vcxproj 的 ClCompile 一致）
 FILES=(
   App.cpp AudioManager.cpp AutoText.cpp BilibiliFansItem.cpp Blur.cpp
-  ClickEffect.cpp ConfigManager.cpp CounterItem.cpp CPSDetector.cpp CPSItem.cpp
-  DanmakuItem.cpp dllmain.cpp FileCountItem.cpp fonts.cpp FpsItem.cpp
+  ChatCommand.cpp ClickEffect.cpp ConfigManager.cpp CounterItem.cpp CPSDetector.cpp CPSItem.cpp
+  DanmakuItem.cpp dllmain.cpp FakeBlock.cpp FileCountItem.cpp fonts.cpp FpsItem.cpp
   GameKeyBind.cpp GameStateDetector.cpp GameWindowTool.cpp GlobalConfig.cpp
   GlobalWindowStyle.cpp gui.cpp HttpClient.cpp HttpUpdateWorker.cpp Images.cpp
   ItemManager.cpp KeyState.cpp KeystrokesItem.cpp Menu.cpp Motionblur.cpp

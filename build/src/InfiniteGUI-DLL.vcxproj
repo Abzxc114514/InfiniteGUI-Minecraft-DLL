@@ -153,7 +153,9 @@
     <ClInclude Include="AutoText.h" />
     <ClInclude Include="BilibiliFansItem.h" />
     <ClInclude Include="Blur.h" />
+    <ClInclude Include="BindRegistry.h" />
     <ClInclude Include="CategoryBar.h" />
+    <ClInclude Include="ChatCommand.h" />
     <ClInclude Include="ClickCircle.h" />
     <ClInclude Include="ClickEffect.h" />
     <ClInclude Include="ClickEffectBase.h" />
@@ -169,6 +171,7 @@
     <ClInclude Include="detours\include\syelog.h" />
     <ClInclude Include="detours\lazy_importer.hpp" />
     <ClInclude Include="detours\titan_hook.h" />
+    <ClInclude Include="FakeBlock.h" />
     <ClInclude Include="FileCountItem.h" />
     <ClInclude Include="FileUtils.h" />
     <ClInclude Include="fonts.h" />
@@ -252,6 +255,7 @@
     <ClCompile Include="AutoText.cpp" />
     <ClCompile Include="BilibiliFansItem.cpp" />
     <ClCompile Include="Blur.cpp" />
+    <ClCompile Include="ChatCommand.cpp" />
     <ClCompile Include="ClickEffect.cpp" />
     <ClCompile Include="ConfigManager.cpp" />
     <ClCompile Include="CounterItem.cpp" />
@@ -259,6 +263,7 @@
     <ClCompile Include="CPSItem.cpp" />
     <ClCompile Include="DanmakuItem.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="FakeBlock.cpp" />
     <ClCompile Include="FileCountItem.cpp" />
     <ClCompile Include="fonts.cpp" />
     <ClCompile Include="FpsItem.cpp" />

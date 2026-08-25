@@ -28,6 +28,10 @@
 #include "AutoText.h"
 #include "MusicInfoItem.h"
 
+#include "BindRegistry.h"
+#include "ChatCommand.h"
+#include "FakeBlock.h"
+
 // ------------------------------------------------
 ItemManager::ItemManager()
 {
@@ -36,7 +40,7 @@ ItemManager::ItemManager()
 
 void ItemManager::Init()
 {
-    // ע��Ĭ�� Singleton
+    // 注册默认 Singleton
     AddItem(&Menu::Instance());
 
     AddItem(&Sprint::Instance());
@@ -62,6 +66,27 @@ void ItemManager::Init()
     AddItem(&GameStateDetector::Instance());
     AddItem(&GameWindowTool::Instance());
     AddItem(&CPSDetector::Instance());
+
+    // ---- 新模块 ----
+    AddItem(&FakeBlock::Instance());
+    AddItem(&ChatCommand::Instance());
+
+    // ---- .bind 聊天命令：已有模块注册（仅读写绑定键，触发逻辑由模块自己处理）----
+    {
+        BindableAction sprint;
+        sprint.name = "sprint";
+        sprint.label = u8"强制疾跑";
+        sprint.getKey = [] { return Sprint::Instance().GetBindKey(u8"激活键："); };
+        sprint.setKey = [](int vk) { Sprint::Instance().SetBindKey(u8"激活键：", vk); };
+        BindRegistry::Instance().Register(sprint);
+
+        BindableAction menu;
+        menu.name = "menu";
+        menu.label = u8"菜单";
+        menu.getKey = [] { return Menu::Instance().GetBindKey(u8"菜单快捷键："); };
+        menu.setKey = [](int vk) { Menu::Instance().SetBindKey(u8"菜单快捷键：", vk); };
+        BindRegistry::Instance().Register(menu);
+    }
 }
 
 // ------------------------------------------------
@@ -92,7 +117,7 @@ void ItemManager::RenderAllGui() const
 {
     bool isWindowNeedHide = false;
     if (GameStateDetector::Instance().IsNeedHide())
-        isWindowNeedHide = true; // �������д���
+        isWindowNeedHide = true; // 隐藏所有窗口
     for (auto item : Items)
     {
         if (!item->isEnabled) continue;
@@ -143,12 +168,12 @@ bool ItemManager::IsDirty() const
             if (!item->isEnabled) continue;
             if (auto ren = dynamic_cast<RenderModule*>(item))
             {
-                if (ren->IsAnimating()) //������
+                if (ren->IsAnimating()) //动画中
                 {
                     isDirty = true;
                     break;
                 }
-                if (ren->IsContentDirty()) //���ݱ仯
+                if (ren->IsContentDirty()) //内容变化
                 {
                     ren->SetContentDirty(false);
                     isDirty = true;
@@ -180,7 +205,7 @@ void ItemManager::ProcessKeyEvents(bool state, bool isRepeat, WPARAM key) const
 // ------------------------------------------------
 void ItemManager::Load(const nlohmann::json& j) const
 {
-    // ---- ����Item ----
+    // ---- 加载Item ----
     if (j.contains("Items"))
     {
         for (auto& node : j["Items"])
@@ -213,12 +238,12 @@ void ItemManager::Save(nlohmann::json& j) const
 
 void ItemManager::Clear(bool resetSingletons) const
 {
-    // ---- �������� Items ----
+    // ---- 重置所有 Items ----
     if (resetSingletons)
     {
         for (auto* item : Items)
         {
-            item->Reset();   //  Ҫ�� Item �ṩ Reset() ��Ĭ��״̬
+            item->Reset();   //  要求 Item 提供 Reset() 或默认状态
         }
     }
 }
