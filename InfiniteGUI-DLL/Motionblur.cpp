@@ -5,7 +5,7 @@
 #include "FpsItem.h"
 #include "opengl_hook.h"
 #include "GameStateDetector.h"
-#include "imgui\imgui_internal.h"
+#include "imgui/imgui_internal.h"
 #include "ImGuiStd.h"
 auto vertex_shader_code = R"glsl(
 #version 330 core

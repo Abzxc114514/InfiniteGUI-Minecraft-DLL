@@ -4,7 +4,7 @@
 #include "Anim.h"
 #include "StringConverter.h"
 #include "AudioManager.h"
-#include "imgui\imgui_internal.h"
+#include "imgui/imgui_internal.h"
 #include "ImGuiStd.h"
 namespace fs = std::filesystem;
 

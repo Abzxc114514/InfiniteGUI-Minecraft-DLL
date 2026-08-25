@@ -1,7 +1,7 @@
 #include "BilibiliFansItem.h"
 #include "HttpClient.h"
 #include "ImGuiStd.h"
-#include "ImGui\imgui_internal.h"
+#include "imgui/imgui_internal.h"
 #include <nlohmann/json.hpp>
 #include "AudioManager.h"
 #include "HttpUpdateWorker.h"

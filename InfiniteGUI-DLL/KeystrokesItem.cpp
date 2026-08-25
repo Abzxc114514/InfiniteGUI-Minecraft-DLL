@@ -1,6 +1,6 @@
 #include "KeystrokesItem.h"
-#include "imgui\imgui.h"
-#include "imgui\imgui_internal.h"
+#include "imgui/imgui.h"
+#include "imgui/imgui_internal.h"
 #include "ImGuiStd.h"
 #include <string>
 #include <windows.h>
