@@ -241,6 +241,7 @@ void MusicInfoItem::Update()
 
     bool needDecode = false;
 
+#if !defined(IGUI_MINGW)
     if (hasOthers)
     {
         auto playbackInfo = session.GetPlaybackInfo();
@@ -293,7 +294,9 @@ void MusicInfoItem::Update()
             needDecode = true;
         }
     }
-    else if (hasNetease)
+    else
+#endif
+    if (hasNetease)
     {
         wchar_t titleBuf[256];
         GetWindowTextW(neteaseHwnd, titleBuf, 256);
@@ -435,6 +438,9 @@ void MusicInfoItem::Update()
 
 void MusicInfoItem::RenderPlaybackBar()
 {
+#if defined(IGUI_MINGW)
+    return; // MinGW 构建无 WinRT 媒体控制
+#else
     auto session = mediaManager.GetCurrentSession();
     if (!session) return;
     auto playbackInfo = session.GetPlaybackInfo();
@@ -472,6 +478,7 @@ void MusicInfoItem::RenderPlaybackBar()
     ImGui::Dummy(ImVec2(0, 0));
     ImGui::PopStyleColor(2);
     ImGui::PopFont();
+#endif
 }
 
 void MusicInfoItem::HoverSetting()
