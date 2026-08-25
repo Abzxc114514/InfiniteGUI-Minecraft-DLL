@@ -146,6 +146,7 @@ static bool ParseKuGouTitle(
     return true;
 }
 
+#if !defined(IGUI_MINGW)
 static std::vector<uint8_t> ReadStream(
     winrt::Windows::Storage::Streams::IRandomAccessStream const& stream)
 {
@@ -159,6 +160,7 @@ static std::vector<uint8_t> ReadStream(
     reader.ReadBytes(data);
     return data;
 }
+#endif
 
 struct MediaKey
 {
@@ -176,6 +178,9 @@ struct MediaKey
 
 void MusicInfoItem::InitMediaManager()
 {
+#if defined(IGUI_MINGW)
+    return; // MinGW 构建无 WinRT，跳过系统媒体会话
+#else
     if (mediaManagerReady)
         return;
     try
@@ -192,19 +197,25 @@ void MusicInfoItem::InitMediaManager()
     {
         mediaManagerReady = false;
     }
+#endif
 }
 
 void MusicInfoItem::Update()
 {
     InitMediaManager();
 
+#if defined(IGUI_MINGW)
+    // MinGW 构建：无系统媒体会话，仅使用网易云/酷狗窗口检测
+#else
     if (!mediaManagerReady)
         return;
+#endif
 
     hasOthers = false;
     bool hasNetease = false;
     bool hasKuGou = false;
 
+#if !defined(IGUI_MINGW)
     auto session = mediaManager.GetCurrentSession();
     winrt::Windows::Media::Control::GlobalSystemMediaTransportControlsSessionMediaProperties mediaProps{ nullptr };
     if (session)
@@ -219,6 +230,7 @@ void MusicInfoItem::Update()
             hasOthers = false;
         }
     }
+#endif
     HWND neteaseHwnd = FindNeteaseWindow();
     HWND kuGouHwnd = FindKuGouWindow();
     if (neteaseHwnd) hasNetease = true;

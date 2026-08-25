@@ -3,15 +3,20 @@
 #include "UpdateModule.h"
 #include "WindowModule.h"
 
+// MinGW 交叉构建没有 C++/WinRT，仅保留网易云/酷狗窗口标题检测
+#if !defined(IGUI_MINGW)
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Media.Control.h>
 #include <winrt/Windows.Storage.Streams.h>
+#endif
 
 #include <vector>
 #include <string>
 #include <chrono>
 
+#if !defined(IGUI_MINGW)
 #pragma comment(lib, "windowsapp.lib")
+#endif
 
 struct DecodedImage
 {
@@ -77,7 +82,9 @@ public:
 private:
     void InitMediaManager();
     void RenderPlaybackBar();
+#if !defined(IGUI_MINGW)
     winrt::Windows::Media::Control::GlobalSystemMediaTransportControlsSessionManager mediaManager{ nullptr };
+#endif
     bool mediaManagerReady = false;
 
     // ===== 媒体信息 =====
